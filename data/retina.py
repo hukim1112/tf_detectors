@@ -29,10 +29,13 @@ class RetinaDataset():
             random.shuffle(self.image_ids)
         self.label_encoder = LabelEncoder()
 
+    def num_classes(self):
+        return len(self.coco_labels_inverse)
+
     def __len__(self):
         return len(self.ids)
 
-    def load_tfds(self, batch_size=None, trainable_form=True):
+    def load_tfds(self, batch_size, model):
         autotune = tf.data.AUTOTUNE
         tfds = tf.data.Dataset.from_tensor_slices(self.image_ids)
         if self.data_shuffle:
@@ -40,13 +43,12 @@ class RetinaDataset():
         tfds = tfds.map(lambda image_id: tf.py_function(func=self.get_item, inp=[image_id],
                         Tout=[tf.float32, tf.float32, tf.int32]),
                         num_parallel_calls=autotune)
-        if trainable_form:
-            tfds = tfds.padded_batch(
-                batch_size=batch_size, padded_shapes=([None,None,None], [None, None], [None]),
-                padding_values=(0.0, 1e-8, -1), drop_remainder=True)
-            tfds = tfds.map(self.label_encoder.encode_batch, num_parallel_calls=autotune)
-            tfds = tfds.apply(tf.data.experimental.ignore_errors())
-            tfds = tfds.prefetch(autotune)
+        tfds = tfds.padded_batch(
+            batch_size=batch_size, padded_shapes=([None,None,None], [None, None], [None]),
+            padding_values=(0.0, 1e-8, -1), drop_remainder=True)
+        tfds = tfds.map(self.label_encoder.encode_batch, num_parallel_calls=autotune)
+        tfds = tfds.apply(tf.data.experimental.ignore_errors())
+        tfds = tfds.prefetch(autotune)
         return tfds
 
     def get_item(self, image_id):
@@ -137,7 +139,7 @@ class RetinaDataset():
         """
 
         image, bbox = random_flip_horizontal(image, tf.constant(bbox, tf.float32))
-        image, image_shape, _ = resize_and_pad_image(tf.cast(image, tf.float32))
+        image, image_shape, _ = resize_and_pad_image(tf.cast(image, tf.float32), min_side=480, max_side=640, jitter=[400, 500])
         bbox = tf.stack(
             [
                 bbox[:, 0] * image_shape[1],
