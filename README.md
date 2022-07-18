@@ -3,7 +3,6 @@
 This repository contains popular object detection algorithms written by tensorflow 2.
 
 Note. This repository do not guarantee the performances of detection algorithms in real world applications, Since this project is at the inital step.
-
 Therefore, The hyperparameters, training methods and model architectures must be optimized for your problem.
 
 
@@ -99,11 +98,10 @@ This repository is highly inspired and referenced with other open source project
 
 You may need to see other topics for object detection.
 
-1. anchor box optimization : 
+1. anchor box optimization
 2. image augmentation for object detection
 3. backbone optimization for your problem. e.g Do the mobilenet backbone makes your detector faster?
 4. More powerful detectors such as YOLO v5, EfficientDet
 5. Impacts of image resolution on detector's performance.
-6. And so on.
 
  
