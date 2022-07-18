@@ -274,7 +274,7 @@ class EfficientSSD300(Model):
         efficient_backbone = tf.keras.Model(inputs=[backbone.input], outputs=[fmap38x38.output, fmap19x19.output], name="efficient_backbone")
 
         input_layer = tf.keras.Input(shape=(300,300,3))
-        x = tf.layers.keras.Lambda(preprocess_input,
+        x = tf.keras.layers.Lambda(preprocess_input,
                                    name='preprocessing',
                                    input_shape=(300,300,3))(input_layer)
 

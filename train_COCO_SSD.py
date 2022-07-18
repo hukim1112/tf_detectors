@@ -1,14 +1,7 @@
 import os
 
-#-----------paramter setting------------#
+#environment setting
 os.environ["CUDA_VISIBLE_DEVICES"]="2"
-epochs = 100
-batch_size = 32
-autotune = tf.data.AUTOTUNE
-model_dir = os.path.join("experiments/EfficientSSD300", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
-os.makedirs(model_dir, exist_ok=True)
-
-
 import tensorflow as tf
 gpus = tf.config.experimental.list_physical_devices('GPU')
 if gpus:
@@ -23,6 +16,12 @@ from data.ssd import SSDDataset
 from models.SSD import SSD300
 from config.path import PATH # config/path.py to manage your dataset paths
 coco_path = PATH["COCO"]
+
+epochs = 100
+batch_size = 32
+autotune = tf.data.AUTOTUNE
+model_dir = os.path.join("experiments/SSD300", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+os.makedirs(model_dir, exist_ok=True)
 
 #load datasets
 image_path = f"{coco_path}/images/train2017"

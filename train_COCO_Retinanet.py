@@ -1,14 +1,8 @@
 import os
+import tensorflow as tf
 
-#-----------paramter setting------------#
+#environment setting
 os.environ["CUDA_VISIBLE_DEVICES"]="1"
-epochs = 100
-batch_size = 8
-autotune = tf.data.AUTOTUNE
-model_dir = os.path.join("experiments/RetinaNet", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
-os.makedirs(model_dir, exist_ok=True)
-
-
 import tensorflow as tf
 gpus = tf.config.experimental.list_physical_devices('GPU')
 if gpus:
@@ -23,6 +17,17 @@ from data.retina import RetinaDataset
 from models.RetinaNet import RetinaNet
 from config.path import PATH # config/path.py to manage your dataset paths
 coco_path = PATH["COCO"]
+
+
+#-----------paramter setting------------#
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
+epochs = 100
+batch_size = 8
+optimizer_clipnorm = 0.001
+autotune = tf.data.AUTOTUNE
+model_dir = os.path.join("experiments/RetinaNet", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+os.makedirs(model_dir, exist_ok=True)
+
 
 #load datasets
 image_path = f"{coco_path}/images/train2017"
@@ -40,7 +45,7 @@ train_tfds = train_dataset.load_tfds(batch_size=batch_size, model=model)
 val_tfds = val_dataset.load_tfds(batch_size=batch_size, model=model)
 
 # compile model.
-optimizer = tf.optimizers.Adam(learning_rate=0.001)
+optimizer = tf.optimizers.Adam(learning_rate=0.001, clipnorm=optimizer_clipnorm)
 model.compile(optimizer=optimizer)
 callbacks_list = [
     tf.keras.callbacks.ModelCheckpoint(

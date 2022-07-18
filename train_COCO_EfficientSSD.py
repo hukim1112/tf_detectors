@@ -1,14 +1,8 @@
 import os
+import tensorflow as tf
 
-#-----------paramter setting------------#
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
-epochs = 100
-batch_size = 32
-autotune = tf.data.AUTOTUNE
-model_dir = os.path.join("experiments/EfficientSSD300", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
-os.makedirs(model_dir, exist_ok=True)
-
-
+#environment setting
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
 import tensorflow as tf
 gpus = tf.config.experimental.list_physical_devices('GPU')
 if gpus:
@@ -18,11 +12,19 @@ if gpus:
     # 프로그램 시작시에 메모리 증가가 설정되어야만 합니다
     print(e)
 
+
 import datetime
 from data.ssd import SSDDataset
 from models.SSD import EfficientSSD300
 from config.path import PATH # config/path.py to manage your dataset paths
 coco_path = PATH["COCO"]
+
+#-----------paramter setting------------#
+epochs = 100
+batch_size = 32
+autotune = tf.data.AUTOTUNE
+model_dir = os.path.join("experiments/EfficientSSD300", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+os.makedirs(model_dir, exist_ok=True)
 
 #load datasets
 image_path = f"{coco_path}/images/train2017"
