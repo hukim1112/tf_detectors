@@ -83,7 +83,7 @@ There are some executable modules which bring dataset and models to train. You c
 
 This repository do not yet offer mAP evaluation which are the most popular metric in object detection algorithms. I recommend you to use [Padilla's open sources](https://github.com/rafaelpadilla/Object-Detection-Metrics). My use case is [here](https://drive.google.com/drive/folders/1kEweEiyCWdWPoPyWMuL9_rxiz2YdG5nK?usp=sharing)  
 
-Quickstart to create coco-style json file for your detections is [here](https://colab.research.google.com/drive/1hfqa82J-VLZk2AVJie74mhy7pY_kT84_?usp=sharing) 
+In my use case, you need test.json compared with gt.json(ground truths for test images). The test.json is model's predictions of your test dataset. For this, building coco-style json file for your detections is [here](https://colab.research.google.com/drive/1hfqa82J-VLZk2AVJie74mhy7pY_kT84_?usp=sharing) 
 
 
 
