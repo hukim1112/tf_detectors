@@ -11,7 +11,9 @@ Therefore, The hyperparameters, training methods and model architectures must be
 
 How to use this repository? First of all, See tutorial.ipynb
 
-You can create Dataset with given paths of images and coco-style-json. You choose how much images are used and whether you shuffle them or not. We create only one dataset for this tutorial. For real, We need at least two datasets for training and validation. The \_\_init\_\_ of Datasets also takes 'transform' and 'target_transform' which should be used for image transformation(image augmentation) and label transformation(bbox refinery by image augmentation) respectively.
+You can create a Dataset object from given paths of images and coco-style-json. You choose how much images are used in dataset and whether you shuffle them or not. The datasets also takes 'transform' and 'target_transform' which should be used for image transformation(image augmentation) and label transformation(bbox refinery by image augmentation) respectively.
+
+We create only one dataset for this tutorial. For real, We need at least two datasets for training and validation. 
 ```
 dataset_path = /your/dataset/directory/path
 image_path = f"{dataset_path}/images/train/"
@@ -95,4 +97,13 @@ This repository is highly inspired and referenced with other open source project
 - https://github.com/fizyr/keras-retinane
 - https://github.com/rafaelpadilla/Object-Detection-Metrics
 
+You may need to see other topics for object detection.
 
+1. anchor box optimization : 
+2. image augmentation for object detection
+3. backbone optimization for your problem. e.g Do the mobilenet backbone makes your detector faster?
+4. More powerful detectors such as YOLO v5, EfficientDet
+5. Impacts of image resolution on detector's performance.
+6. And so on.
+
+ 
